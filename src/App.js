@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as BooksAPI from './BooksAPI'
 import { Route } from 'react-router-dom'
 import SearchNav from './SearchNav'
-import BookShelves from './BookShelves'
+import BookShelf from './BookShelf'
 import './App.css'
 
 class BooksApp extends Component {
@@ -16,23 +16,14 @@ class BooksApp extends Component {
   }
 
   render() {
-    /* BooksAPI.getAll().then( books => {
-      for (var book in books) {
-        if (books.hasOwnProperty(book)) {
-          var element = books[book];
-          console.log(element)
-        }
-      }
-    }) */
 
     return (
-
       <div className="app">
         <Route exact path="/search" render={ () => (
           <SearchNav />
         )}/>
         <Route exact path="/" render={ () => (
-          <BookShelves />
+          <BookShelf/>
         )}/>
       </div>
     )
