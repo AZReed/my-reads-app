@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import * as BooksAPI from './BooksAPI'
-import { Route } from 'react-router-dom'
-import {Link} from 'react-router-dom'
+import { Route, Link } from 'react-router-dom'
 import SearchNav from './SearchNav'
 import BookShelf from './BookShelf'
 import './App.css'
