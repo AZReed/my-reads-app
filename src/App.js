@@ -28,6 +28,10 @@ class BooksApp extends Component {
     )
   }
 
+  moveBookToShelf = shelf => {
+    //update book and set state of books
+  }
+
   render() {
 
     // const {books} = this.state
@@ -56,6 +60,7 @@ class BooksApp extends Component {
                 <BookShelf
                   shelfName="Read"
                   books={this.filterBooksByShelf('read')}
+                  moveBookToShelf={this.moveBookToShelf}
                 />
               </div>
             <div className="open-search">
