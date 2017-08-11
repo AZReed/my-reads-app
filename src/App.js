@@ -19,7 +19,7 @@ class BooksApp extends Component {
   componentDidMount() {
     BooksAPI.getAll().then( books => {
       this.setState({ books })
-    }) 
+    })
   }
 
   filterBooksByShelf = shelf => {
@@ -28,8 +28,13 @@ class BooksApp extends Component {
     )
   }
 
-  moveBookToShelf = shelf => {
-    //update book and set state of books
+  moveBookToShelf = (bookId, shelf) => {
+    this.state.books.forEach( stateBook => {
+      if (stateBook.id === bookId) {
+        stateBook.shelf = shelf
+      }
+    })
+    this.forceUpdate()
   }
 
   render() {
@@ -49,20 +54,22 @@ class BooksApp extends Component {
               <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-                <BookShelf
-                  shelfName="Currently Reading"
-                  books={this.filterBooksByShelf('currentlyReading')}
-                />
-                <BookShelf
-                  shelfName="Want To Read"
-                  books={this.filterBooksByShelf('wantToRead')}
-                />
-                <BookShelf
-                  shelfName="Read"
-                  books={this.filterBooksByShelf('read')}
-                  moveBookToShelf={this.moveBookToShelf}
-                />
-              </div>
+              <BookShelf
+                shelfName="Currently Reading"
+                books={this.filterBooksByShelf('currentlyReading')}
+                moveBookToShelf={this.moveBookToShelf}
+              />
+              <BookShelf
+                shelfName="Want To Read"
+                books={this.filterBooksByShelf('wantToRead')}
+                moveBookToShelf={this.moveBookToShelf}
+              />
+              <BookShelf
+                shelfName="Read"
+                books={this.filterBooksByShelf('read')}
+                moveBookToShelf={this.moveBookToShelf}
+              />
+            </div>
             <div className="open-search">
               <Link to="/search">Add a book</Link>
             </div>
