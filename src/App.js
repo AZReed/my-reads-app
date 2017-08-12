@@ -28,13 +28,14 @@ class BooksApp extends Component {
     )
   }
 
-  moveBookToShelf = (bookId, shelf) => {
+  moveBookToShelf = (book, shelf) => {
     this.state.books.forEach( stateBook => {
-      if (stateBook.id === bookId) {
+      if (stateBook.id === book.id) {
         stateBook.shelf = shelf
       }
     })
     this.forceUpdate()
+    BooksAPI.update(book, shelf)
   }
 
   shelves = () => {
