@@ -13,7 +13,8 @@ class BooksApp extends Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    books: []
+    books: [],
+    booksSearch: []
   }
 
   componentDidMount() {
@@ -37,6 +38,21 @@ class BooksApp extends Component {
     this.forceUpdate()
     BooksAPI.update(book, shelf)
   }
+  
+  addBookToShelf = (book, shelf) => {
+    book.shelf = shelf
+    this.state.books.push(book)
+    this.forceUpdate()
+    // add book into api
+  }
+
+  searchQuery = (query) => {
+    let me = this
+    BooksAPI.search(query).then( res => {
+      // console.log(res)
+      me.setState({ booksSearch: res })
+    })
+  }
 
   shelves = () => {
     return [{value: 'currentlyReading', name: 'Currently Reading'},
@@ -52,7 +68,11 @@ class BooksApp extends Component {
       <div className="app">
 
         <Route exact path="/search" render={ () => (
-          <SearchNav />
+          <SearchNav 
+            searchQuery={this.searchQuery}
+            booksSearch={this.state.booksSearch}
+            addBookToShelf={this.addBookToShelf}
+          />
         )}/>
 
         <Route exact path="/" render={ () => (
