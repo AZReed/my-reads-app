@@ -37,6 +37,12 @@ class BooksApp extends Component {
     this.forceUpdate()
   }
 
+  shelves = () => {
+    return [{value: 'currentlyReading', name: 'Currently Reading'},
+            {value: 'wantToRead', name: 'Want To Read'},
+            {value: 'read', name: 'Read'}]
+  }
+
   render() {
 
     // const {books} = this.state
@@ -54,21 +60,14 @@ class BooksApp extends Component {
               <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-              <BookShelf
-                shelfName="Currently Reading"
-                books={this.filterBooksByShelf('currentlyReading')}
-                moveBookToShelf={this.moveBookToShelf}
-              />
-              <BookShelf
-                shelfName="Want To Read"
-                books={this.filterBooksByShelf('wantToRead')}
-                moveBookToShelf={this.moveBookToShelf}
-              />
-              <BookShelf
-                shelfName="Read"
-                books={this.filterBooksByShelf('read')}
-                moveBookToShelf={this.moveBookToShelf}
-              />
+              {this.shelves().map( (shelf) => 
+                <BookShelf
+                  key={shelf.value}
+                  shelfName={shelf.name}
+                  books={this.filterBooksByShelf(shelf.value)}
+                  moveBookToShelf={this.moveBookToShelf}
+                />
+              )}
             </div>
             <div className="open-search">
               <Link to="/search">Add a book</Link>
