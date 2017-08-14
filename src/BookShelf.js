@@ -3,6 +3,10 @@ import React, { Component } from 'react';
 
 class BookShelf extends Component {
 
+  handleChange(book,event){
+    this.props.moveBookToShelf(book,event.target.value)
+  }
+
   render() {
 
     const {shelfName,books} = this.props
@@ -18,8 +22,8 @@ class BookShelf extends Component {
                   <div className="book-top">
                     <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
                     <div className="book-shelf-changer">
-                      <select>
-                        <option value="none" disabled>Move to...</option>
+                      <select value={book.shelf} onChange={this.handleChange.bind(this,book)}>
+                        <option disabled>Move to...</option>
                         <option value="currentlyReading">Currently Reading</option>
                         <option value="wantToRead">Want to Read</option>
                         <option value="read">Read</option>

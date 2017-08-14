@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import * as BooksAPI from './BooksAPI'
-import { Route } from 'react-router-dom'
-import {Link} from 'react-router-dom'
+import { Route, Link } from 'react-router-dom'
 import SearchNav from './SearchNav'
 import BookShelf from './BookShelf'
 import './App.css'
@@ -14,19 +13,50 @@ class BooksApp extends Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    books: []
+    books: [],
+    booksSearch: []
   }
 
   componentDidMount() {
     BooksAPI.getAll().then( books => {
       this.setState({ books })
-    }) 
+    })
   }
 
   filterBooksByShelf = shelf => {
     return this.state.books.filter( book =>
       book.shelf === shelf
     )
+  }
+
+  moveBookToShelf = (book, shelf) => {
+    this.state.books.forEach( stateBook => {
+      if (stateBook.id === book.id) {
+        stateBook.shelf = shelf
+      }
+    })
+    this.forceUpdate()
+    BooksAPI.update(book, shelf)
+  }
+
+  addBookToShelf = (book, shelf) => {
+    book.shelf = shelf
+    this.state.books.push(book)
+    this.forceUpdate()
+    BooksAPI.update(book, shelf)
+  }
+
+  searchQuery = (query) => {
+    let me = this
+    BooksAPI.search(query).then( res => {
+      me.setState({ booksSearch: res })
+    })
+  }
+
+  shelves = () => {
+    return [{value: 'currentlyReading', name: 'Currently Reading'},
+            {value: 'wantToRead', name: 'Want To Read'},
+            {value: 'read', name: 'Read'}]
   }
 
   render() {
@@ -37,7 +67,12 @@ class BooksApp extends Component {
       <div className="app">
 
         <Route exact path="/search" render={ () => (
-          <SearchNav />
+          <SearchNav 
+            searchQuery={this.searchQuery}
+            booksSearch={this.state.booksSearch}
+            books={this.state.books}
+            addBookToShelf={this.addBookToShelf}
+          />
         )}/>
 
         <Route exact path="/" render={ () => (
@@ -46,19 +81,15 @@ class BooksApp extends Component {
               <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
+              {this.shelves().map( (shelf) => 
                 <BookShelf
-                  shelfName="Currently Reading"
-                  books={this.filterBooksByShelf('currentlyReading')}
+                  key={shelf.value}
+                  shelfName={shelf.name}
+                  books={this.filterBooksByShelf(shelf.value)}
+                  moveBookToShelf={this.moveBookToShelf}
                 />
-                <BookShelf
-                  shelfName="Want To Read"
-                  books={this.filterBooksByShelf('wantToRead')}
-                />
-                <BookShelf
-                  shelfName="Read"
-                  books={this.filterBooksByShelf('read')}
-                />
-              </div>
+              )}
+            </div>
             <div className="open-search">
               <Link to="/search">Add a book</Link>
             </div>
