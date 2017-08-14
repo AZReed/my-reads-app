@@ -17,7 +17,8 @@ class Search extends Component {
 
   render() {
 
-    const books = this.props.booksSearch
+    const booksSearch = this.props.booksSearch
+    const books = this.props.books
 
     return (
       <div className="search-books">
@@ -45,26 +46,31 @@ class Search extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {books.map( (book, index) =>
-                <li key={book.id}>
-                  <div className="book">
-                    <div className="book-top">
-                      <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
-                      <div className="book-shelf-changer">
-                        <select value={book.shelf || 'none'} onChange={this.handleChange.bind(this,book)}>
-                          <option value="none" disabled>Move to...</option>
-                          <option value="currentlyReading">Currently Reading</option>
-                          <option value="wantToRead">Want to Read</option>
-                          <option value="read">Read</option>
-                          <option value="none">None</option>
-                        </select>
-                      </div>
+            {booksSearch.map( (bookSearch, index) =>
+              <li key={bookSearch.id}>
+                <div className="book">
+                  <div className="book-top">
+                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${bookSearch.imageLinks.smallThumbnail})` }}></div>
+                    <div className="book-shelf-changer">
+                      {books.forEach( book => {
+                        if (book.id === bookSearch.id) {
+                          bookSearch.shelf = book.shelf
+                        }
+                      })}
+                      <select value={bookSearch.shelf || "none"} onChange={this.handleChange.bind(this,bookSearch)}>
+                        <option disabled>Move to...</option>
+                        <option value="currentlyReading">Currently Reading</option>
+                        <option value="wantToRead">Want to Read</option>
+                        <option value="read">Read</option>
+                        <option value="none">None</option>
+                      </select>
                     </div>
-                    <div className="book-title">{book.title}</div>
-                    <div className="book-authors">{book.authors}</div>
                   </div>
-                </li>
-              )}
+                  <div className="book-title">{bookSearch.title}</div>
+                  <div className="book-authors">{bookSearch.authors}</div>
+                </div>
+              </li>
+            )}
           </ol>
         </div>
       </div>

@@ -38,18 +38,17 @@ class BooksApp extends Component {
     this.forceUpdate()
     BooksAPI.update(book, shelf)
   }
-  
+
   addBookToShelf = (book, shelf) => {
     book.shelf = shelf
     this.state.books.push(book)
     this.forceUpdate()
-    // add book into api
+    BooksAPI.update(book, shelf)
   }
 
   searchQuery = (query) => {
     let me = this
     BooksAPI.search(query).then( res => {
-      // console.log(res)
       me.setState({ booksSearch: res })
     })
   }
@@ -71,6 +70,7 @@ class BooksApp extends Component {
           <SearchNav 
             searchQuery={this.searchQuery}
             booksSearch={this.state.booksSearch}
+            books={this.state.books}
             addBookToShelf={this.addBookToShelf}
           />
         )}/>
