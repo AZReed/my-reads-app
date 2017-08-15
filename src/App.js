@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import * as BooksAPI from './BooksAPI'
 import { Route, Link } from 'react-router-dom'
 import SearchNav from './SearchNav'
-import BookShelf from './BookShelf'
+import BookShelves from './BookShelves'
+// import BookShelf from './BookShelf'
 import './App.css'
 
 class BooksApp extends Component {
@@ -23,21 +24,6 @@ class BooksApp extends Component {
     })
   }
 
-  filterBooksByShelf = shelf => {
-    return this.state.books.filter( book =>
-      book.shelf === shelf
-    )
-  }
-
-  moveBookToShelf = (book, shelf) => {
-    this.state.books.forEach( stateBook => {
-      if (stateBook.id === book.id) {
-        stateBook.shelf = shelf
-      }
-    })
-    this.forceUpdate()
-    BooksAPI.update(book, shelf)
-  }
 
   addBookToShelf = (book, shelf) => {
     book.shelf = shelf
@@ -51,12 +37,6 @@ class BooksApp extends Component {
     BooksAPI.search(query).then( res => {
       me.setState({ booksSearch: res })
     })
-  }
-
-  shelves = () => {
-    return [{value: 'currentlyReading', name: 'Currently Reading'},
-            {value: 'wantToRead', name: 'Want To Read'},
-            {value: 'read', name: 'Read'}]
   }
 
   render() {
@@ -81,14 +61,9 @@ class BooksApp extends Component {
               <h1>MyReads</h1>
             </div>
             <div className="list-books-content">
-              {this.shelves().map( (shelf) => 
-                <BookShelf
-                  key={shelf.value}
-                  shelfName={shelf.name}
-                  books={this.filterBooksByShelf(shelf.value)}
-                  moveBookToShelf={this.moveBookToShelf}
-                />
-              )}
+              <BookShelves
+                books={this.state.books}
+              />
             </div>
             <div className="open-search">
               <Link to="/search">Add a book</Link>
