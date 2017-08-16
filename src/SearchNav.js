@@ -1,23 +1,35 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
-// import * as BooksAPI from './BooksAPI'
+import Book from './Book'
+import * as BooksAPI from './BooksAPI'
 
 class Search extends Component {
 
-  handleInput = event => {
-    // console.log(event.target.value)
-    let query = event.target.value
-    this.props.searchQuery(query)
+  state = {
+    booksSearch: []
   }
 
-  handleChange = (book, event) => {
+  searchQuery = (event) => {
+    let query = event.target.value
+    let me = this
+    BooksAPI.search(query).then( res => {
+      me.setState({ booksSearch: res })
+    })
+  }
+
+  addBookToShelf = (book, event) => {
     let shelf = event.target.value
-    this.props.addBookToShelf(book, shelf)
+    book.shelf = shelf
+
+    BooksAPI.update(book, shelf)
+
+    this.props.books.push(book)
+    this.props.setBooksState(this.props.books)
   }
 
   render() {
 
-    const booksSearch = this.props.booksSearch
+    const booksSearch = this.state.booksSearch
     const books = this.props.books
 
     return (
@@ -28,37 +40,24 @@ class Search extends Component {
             className="close-search"
           >Close</Link>
           <div className="search-books-input-wrapper">
-
-            <input type="text" onChange={this.handleInput} placeholder="Search by title or author"/>
-
+            <input type="text" onChange={this.searchQuery} placeholder="Search by title or author"/>
           </div>
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
             {booksSearch.map( (bookSearch, index) =>
-              <li key={bookSearch.id}>
-                <div className="book">
-                  <div className="book-top">
-                    <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${bookSearch.imageLinks.smallThumbnail})` }}></div>
-                    <div className="book-shelf-changer">
-                      {books.forEach( book => {
-                        if (book.id === bookSearch.id) {
-                          bookSearch.shelf = book.shelf
-                        }
-                      })}
-                      <select value={bookSearch.shelf || "none"} onChange={this.handleChange.bind(this,bookSearch)}>
-                        <option disabled>Move to...</option>
-                        <option value="currentlyReading">Currently Reading</option>
-                        <option value="wantToRead">Want to Read</option>
-                        <option value="read">Read</option>
-                        <option value="none">None</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="book-title">{bookSearch.title}</div>
-                  <div className="book-authors">{bookSearch.authors}</div>
-                </div>
-              </li>
+              <div key={index}>
+                {books.forEach( book => {
+                  if (book.id === bookSearch.id) {
+                    bookSearch.shelf = book.shelf
+                  }
+                })}
+                <Book
+                  key={bookSearch.id}
+                  book={bookSearch}
+                  handleChange={this.addBookToShelf}
+                />
+              </div>
             )}
           </ol>
         </div>
