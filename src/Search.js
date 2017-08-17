@@ -33,6 +33,8 @@ class Search extends Component {
 
     this.props.books.push(book)
     this.props.setBooksState(this.props.books)
+
+    alert('book added to shelf')
   }
 
   render() {
