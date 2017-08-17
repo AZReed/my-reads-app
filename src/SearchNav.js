@@ -12,8 +12,16 @@ class Search extends Component {
   searchQuery = (event) => {
     let query = event.target.value
     let me = this
-    BooksAPI.search(query).then( res => {
-      me.setState({ booksSearch: res })
+
+    BooksAPI.search(query).then( response => {
+      // console.log(response)
+      if (response === undefined) {
+        // alert('no query')
+      } else if ( response.error ){
+        // alert('no results')
+      } else {
+        me.setState({ booksSearch: response })
+      }
     })
   }
 
@@ -44,6 +52,7 @@ class Search extends Component {
           </div>
         </div>
         <div className="search-books-results">
+          <div id='msg'></div>
           <ol className="books-grid">
             {booksSearch.map( (bookSearch, index) =>
               <div key={index}>
