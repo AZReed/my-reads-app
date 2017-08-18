@@ -23,13 +23,11 @@ class BookShelves extends Component {
     this.props.setBooksState(this.props.books)
   }
 
-  shelves = () => {
-    return [{value: 'currentlyReading', name: 'Currently Reading'},
-            {value: 'wantToRead', name: 'Want To Read'},
-            {value: 'read', name: 'Read'}]
-  }
-
   render() {
+
+    const shelves = [{value: 'currentlyReading', name: 'Currently Reading'},
+                     {value: 'wantToRead', name: 'Want To Read'},
+                     {value: 'read', name: 'Read'}]
 
     return (
       <div className="list-books">
@@ -37,12 +35,11 @@ class BookShelves extends Component {
         <h1>MyReads</h1>
       </div>
       <div className="list-books-content">
-        {this.shelves().map( (shelf) => 
+        {shelves.map( (shelf) => 
           <BookShelf
             key={shelf.value}
             shelfName={shelf.name}
             books={this.filterBooksByShelf(shelf.value)}
-            setBooksState={this.props.setBooksState}
             moveBookToShelf={this.moveBookToShelf}
           />
         )}

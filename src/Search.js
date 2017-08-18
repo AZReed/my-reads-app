@@ -6,7 +6,7 @@ import * as BooksAPI from './BooksAPI'
 class Search extends Component {
 
   state = {
-    booksSearch: []
+    searchResult: []
   }
 
   searchQuery = (event) => {
@@ -20,7 +20,16 @@ class Search extends Component {
       } else if ( response.error ){
         // alert('no results')
       } else {
-        me.setState({ booksSearch: response })
+
+        response.forEach( bookSearched => {
+          this.props.books.forEach( book => {
+            if (book.id === bookSearched.id) {
+              bookSearched.shelf = book.shelf
+            }
+          })
+        })
+
+        me.setState({ searchResult: response })
       }
     })
   }
@@ -31,16 +40,18 @@ class Search extends Component {
 
     BooksAPI.update(book, shelf)
 
-    this.props.books.push(book)
-    this.props.setBooksState(this.props.books)
-
+    let me = this
+    BooksAPI.getAll().then( books => {
+      console.log(books)
+      me.props.setBooksState(books)
+    })
+  
     alert('book added to shelf')
   }
 
   render() {
 
-    const booksSearch = this.state.booksSearch
-    const books = this.props.books
+    const searchResult = this.state.searchResult
 
     return (
       <div className="search-books">
@@ -56,13 +67,8 @@ class Search extends Component {
         <div className="search-books-results">
           <div id='msg'></div>
           <ol className="books-grid">
-            {booksSearch.map( (bookSearch, index) =>
+            {searchResult.map( (bookSearch, index) =>
               <div key={index}>
-                {books.forEach( book => {
-                  if (book.id === bookSearch.id) {
-                    bookSearch.shelf = book.shelf
-                  }
-                })}
                 <Book
                   key={bookSearch.id}
                   book={bookSearch}
