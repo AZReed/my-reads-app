@@ -36,15 +36,9 @@ class Search extends Component {
     let shelf = event.target.value;
     book.shelf = shelf;
 
-    BooksAPI.update(book, shelf);
-
-    let me = this;
-    BooksAPI.getAll().then(books => {
-      console.log(books);
-      me.props.setBooksState(books);
+    BooksAPI.update(book, shelf).then(() => {
+      this.props.setBooksState(book, shelf);
     });
-
-    alert("book added to shelf");
   };
 
   render() {
