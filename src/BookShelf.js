@@ -20,6 +20,6 @@ const BookShelf = props => {
       </div>
     </div>
   );
-}
+};
 
 export default BookShelf;

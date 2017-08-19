@@ -16,9 +16,9 @@ class BookShelves extends Component {
       }
     });
 
-    BooksAPI.update(bookToMove, shelf).then( () => {
-      this.props.setBooksState(bookToMove, shelf)
-    })
+    BooksAPI.update(bookToMove, shelf).then(() => {
+      this.props.setBooksState(bookToMove, shelf);
+    });
   };
 
   render() {

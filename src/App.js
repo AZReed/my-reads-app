@@ -17,10 +17,10 @@ class BooksApp extends Component {
   }
 
   setBooksState = (book, shelf) => {
-    book.shelf = shelf
+    book.shelf = shelf;
     this.setState(state => ({
       books: state.books.filter(b => b.id !== book.id).concat([book])
-    }))
+    }));
   };
 
   render() {
