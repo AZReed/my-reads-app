@@ -1,46 +1,50 @@
-import React, { Component } from 'react';
-import * as BooksAPI from './BooksAPI'
-import { Route } from 'react-router-dom'
-import Search from './Search'
-import BookShelves from './BookShelves'
-import './App.css'
+import React, { Component } from "react";
+import * as BooksAPI from "./BooksAPI";
+import { Route } from "react-router-dom";
+import Search from "./Search";
+import BookShelves from "./BookShelves";
+import "./App.css";
 
 class BooksApp extends Component {
   state = {
-    books: [],
-  }
+    books: []
+  };
 
   componentDidMount() {
-    BooksAPI.getAll().then( books => {
-      this.setState({ books })
-    })
+    BooksAPI.getAll().then(books => {
+      this.setState({ books });
+    });
   }
 
   setBooksState = books => {
-    this.setState({ books })
-  }
+    this.setState({ books });
+  };
 
   render() {
-
     return (
       <div className="app">
+        <Route
+          exact
+          path="/search"
+          render={() =>
+            <Search
+              books={this.state.books}
+              setBooksState={this.setBooksState}
+            />}
+        />
 
-        <Route exact path="/search" render={ () => (
-          <Search
-            books={this.state.books}
-            setBooksState={this.setBooksState}
-          />
-        )}/>
-
-        <Route exact path="/" render={ () => (
-          <BookShelves
-            books={this.state.books}
-            setBooksState={this.setBooksState}
-          />
-        )}/>
+        <Route
+          exact
+          path="/"
+          render={() =>
+            <BookShelves
+              books={this.state.books}
+              setBooksState={this.setBooksState}
+            />}
+        />
       </div>
-    )
+    );
   }
 }
 
-export default BooksApp
+export default BooksApp;
