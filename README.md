@@ -1,6 +1,6 @@
 ## My Reads App
 
-A fun project built with React.js that handle states to change books from one shelf to another, and also to add new book to shelves.
+A fun project built with React.js that handles states to change books from one shelf to another, and also to add new books to shelves.
 
 ## Prerequisites
 
@@ -16,8 +16,8 @@ npm start
 
 ## Built With
 
-*[Node.js](https://nodejs.org/en/) - Node
-*[React.js](https://facebook.github.io/react/) - React framework
+* [Node.js](https://nodejs.org/en/) - Node
+* [React.js](https://facebook.github.io/react/) - React framework
 
 ## Authors
 
@@ -26,4 +26,4 @@ npm start
 
 ## Aknowledgments
 
-This is the starter template for the final assessment project for Udacity's React Fundamentals course, developed by [React Training](https://reacttraining.com). The goal of this template is to save you time by providing a static example of the CSS and HTML markup that may be used, but without any of the React code that is needed to complete the project. If you choose to start with this template, your job will be to add interactivity to the app by refactoring the static code in this template.
+This project was made using the starter template for the final assessment project for Udacity's React Fundamentals course, developed by [React Training](https://reacttraining.com). The goal of this template is to save you time by providing a static example of the CSS and HTML markup that may be used, but without any of the React code that is needed to complete the project. If you choose to start with this template, your job will be to add interactivity to the app by refactoring the static code in this template.
