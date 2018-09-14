@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import * as BooksAPI from "./BooksAPI";
+import * as BooksAPI from "./components/BooksAPI";
 import { Route } from "react-router-dom";
-import Search from "./Search";
-import BookShelves from "./BookShelves";
-import "./App.css";
+import Search from "./components/Search";
+import BookShelves from "./components/BookShelves";
+import PropTypes from 'prop-types';
 
 class BooksApp extends Component {
   state = {
@@ -12,6 +12,7 @@ class BooksApp extends Component {
 
   componentDidMount() {
     BooksAPI.getAll().then(books => {
+      // console.log(books)
       this.setState({ books });
     });
   }
@@ -48,6 +49,10 @@ class BooksApp extends Component {
       </div>
     );
   }
+}
+
+BooksApp.propTypes = {
+  books: PropTypes.bool,
 }
 
 export default BooksApp;
