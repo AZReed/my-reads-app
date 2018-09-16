@@ -1,6 +1,8 @@
 import React from "react";
 import Book from "./Book";
 
+import { Card, CardActionArea, CardMedia } from "@material-ui/core";
+
 const BookShelf = props => {
   return (
     <div className="bookshelf">

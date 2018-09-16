@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import BookShelf from "./BookShelf";
 import { Link } from "react-router-dom";
-import * as BooksAPI from "./BooksAPI";
+import * as BooksAPI from "../utils/BooksAPI";
+
+
 
 class BookShelves extends Component {
   filterBooksByShelf = shelf => {
@@ -33,7 +35,6 @@ class BookShelves extends Component {
         <div className="list-books-title">
           <h1>MyReads</h1>
         </div>
-        <div className="list-books-content">
           {shelves.map(shelf =>
             <BookShelf
               key={shelf.value}
@@ -42,7 +43,6 @@ class BookShelves extends Component {
               moveBookToShelf={this.moveBookToShelf}
             />
           )}
-        </div>
         <div className="open-search">
           <Link to="/search">Add a book</Link>
         </div>
