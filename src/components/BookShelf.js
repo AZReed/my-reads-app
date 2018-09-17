@@ -1,8 +1,6 @@
 import React from "react";
 import Book from "./Book";
 
-import { Card, CardActionArea, CardMedia } from "@material-ui/core";
-
 const BookShelf = props => {
   return (
     <div className="bookshelf">
@@ -10,15 +8,13 @@ const BookShelf = props => {
         {props.shelfName}
       </h2>
       <div className="bookshelf-books">
-        <ol className="books-grid">
-          {props.books.map(book =>
-            <Book
-              key={book.id}
-              book={book}
-              handleChange={props.moveBookToShelf}
-            />
-          )}
-        </ol>
+        {props.books.map(book =>
+          <Book
+            key={book.id}
+            book={book}
+            handleChange={props.moveBookToShelf}
+          />
+        )}
       </div>
     </div>
   );
