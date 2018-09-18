@@ -9,6 +9,6 @@ export const apiMiddleware = ({ dispatch }) => next => action => {
     fetch(url, { headers, method })
       .then(response => response.json())
       .then(response => {dispatch(apiSuccess({ response, feature }))})
-      .catch(error => {dispatch(apiError(error, feature))});
+      .catch(error => {dispatch(apiError({error, feature}))});
   }
 };

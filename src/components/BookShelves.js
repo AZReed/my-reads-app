@@ -1,9 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import BookShelf from "./BookShelf";
 import { Link } from "react-router-dom";
 import * as BooksAPI from "../utils/BooksAPI";
-
-
 
 class BookShelves extends Component {
   filterBooksByShelf = shelf => {
@@ -11,6 +9,7 @@ class BookShelves extends Component {
   };
 
   moveBookToShelf = (bookToMove, event) => {
+    console.log('TODO: dispatch action to change shelf')
     let shelf = event.target.value;
     this.props.books.forEach(book => {
       if (book.id === bookToMove.id) {
@@ -31,22 +30,22 @@ class BookShelves extends Component {
     ];
 
     return (
-      <div className="list-books">
-        <div className="list-books-title">
+      <Fragment>
+        <div>
           <h1>MyReads</h1>
         </div>
           {shelves.map(shelf =>
             <BookShelf
-              key={shelf.value}
-              shelfName={shelf.name}
-              books={this.filterBooksByShelf(shelf.value)}
-              moveBookToShelf={this.moveBookToShelf}
+            key={shelf.value}
+            shelfName={shelf.name}
+            books={this.filterBooksByShelf(shelf.value)}
+            moveBookToShelf={this.moveBookToShelf}
             />
-          )}
-        <div className="open-search">
+            )}
+        <div>
           <Link to="/search">Add a book</Link>
         </div>
-      </div>
+      </Fragment>
     );
   }
 }

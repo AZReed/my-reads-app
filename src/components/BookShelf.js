@@ -1,23 +1,24 @@
 import React from "react";
 import Book from "./Book";
 
+import { Card, Image, Icon } from "semantic-ui-react";
+
 const BookShelf = props => {
   return (
-    <div className="bookshelf">
-      <h2 className="bookshelf-title">
-        {props.shelfName}
-      </h2>
-      <div className="bookshelf-books">
-        {props.books.map(book =>
+    <React.Fragment>
+      <h2>{props.shelfName}</h2>
+      <Card.Group itemsPerRow={3}>
+        {props.books.map(book => (
           <Book
             key={book.id}
             book={book}
             handleChange={props.moveBookToShelf}
           />
-        )}
-      </div>
-    </div>
+        ))}
+      </Card.Group>
+    </React.Fragment>
   );
 };
 
 export default BookShelf;
+// export default BookShelf;

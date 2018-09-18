@@ -4,9 +4,12 @@ import Search from "./components/Search";
 import BookShelves from "./components/BookShelves";
 import { connect } from "react-redux";
 import { fetchBooks } from "./actions/books";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import { Paper, Grid } from '@material-ui/core';
+import "./App.css";
+import 'semantic-ui-css/semantic.min.css';
+
+import { Container } from "semantic-ui-react";
 
 class BooksApp extends Component {
   state = {
@@ -14,8 +17,8 @@ class BooksApp extends Component {
   };
 
   componentDidMount() {
-    this.props.fetchBooks('');
-/*     BooksAPI.getAll().then(books => {
+    this.props.fetchBooks("");
+    /*     BooksAPI.getAll().then(books => {
       this.setState({ books });
     }); */
   }
@@ -30,30 +33,27 @@ class BooksApp extends Component {
   render() {
     const books = this.props.books || [];
     return (
-      <Grid item xs={12}>
-        <Paper elevation={3}>
+      <Container>
           {this.props.loading === true ? <p>cargando</p> : <p>no cargando</p>}
           <Route
             exact
             path="/search"
-            render={() =>
+            render={() => (
               <Search
                 books={this.state.books}
                 setBooksState={this.setBooksState}
-              />}
+              />
+            )}
           />
 
           <Route
             exact
             path="/"
-            render={() =>
-              <BookShelves
-                books={books}
-                setBooksState={this.setBooksState}
-              />}
+            render={() => (
+              <BookShelves books={books} setBooksState={this.setBooksState} />
+            )}
           />
-        </Paper>
-      </Grid>
+      </Container>
     );
   }
 }
@@ -61,17 +61,20 @@ class BooksApp extends Component {
 BooksApp.propTypes = {
   books: PropTypes.array,
   loading: PropTypes.bool
-}
+};
 
-function mapStateToProps({books: {books}, ui: {loading}}) {
+function mapStateToProps({ books: { books }, ui: { loading } }) {
   // console.log("MAP",params.books)
-  return { books, loading }
+  return { books, loading };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchBooks: (query) => dispatch(fetchBooks(query))
+    fetchBooks: query => dispatch(fetchBooks(query))
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BooksApp);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BooksApp);
