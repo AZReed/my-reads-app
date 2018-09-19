@@ -3,23 +3,27 @@ import BookShelf from "./BookShelf";
 import { Link } from "react-router-dom";
 import * as BooksAPI from "../utils/BooksAPI";
 
+import { Button } from "semantic-ui-react";
+
 class BookShelves extends Component {
   filterBooksByShelf = shelf => {
     return this.props.books.filter(book => book.shelf === shelf);
   };
 
-  moveBookToShelf = (bookToMove, event) => {
-    console.log('TODO: dispatch action to change shelf')
-    let shelf = event.target.value;
-    this.props.books.forEach(book => {
+  moveBookToShelf = (book, shelf) => {
+/*     this.props.books.forEach(book => {
       if (book.id === bookToMove.id) {
         book.shelf = shelf;
       }
-    });
+    }); */
+    if (shelf !== book.shelf) {
+      console.log("DENTRO")
+      this.props.moveBook({ book, shelf})
+    }
 
-    BooksAPI.update(bookToMove, shelf).then(() => {
-      this.props.setBooksState(bookToMove, shelf);
-    });
+/*     BooksAPI.update(bookToMove, shelf).then((data) => {
+      // this.props.setBooksState(bookToMove, shelf);
+    }); */
   };
 
   render() {
@@ -31,20 +35,20 @@ class BookShelves extends Component {
 
     return (
       <Fragment>
+        <Link to="/search">
+          <Button content='Add Book' icon='add circle' labelPosition='left' />
+        </Link>
         <div>
           <h1>MyReads</h1>
         </div>
-          {shelves.map(shelf =>
-            <BookShelf
-            key={shelf.value}
-            shelfName={shelf.name}
-            books={this.filterBooksByShelf(shelf.value)}
-            moveBookToShelf={this.moveBookToShelf}
-            />
-            )}
-        <div>
-          <Link to="/search">Add a book</Link>
-        </div>
+        {shelves.map(shelf =>
+          <BookShelf
+          key={shelf.value}
+          shelfName={shelf.name}
+          books={this.filterBooksByShelf(shelf.value)}
+          moveBookToShelf={this.moveBookToShelf}
+          />
+          )}
       </Fragment>
     );
   }

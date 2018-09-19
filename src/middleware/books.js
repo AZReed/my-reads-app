@@ -1,24 +1,22 @@
-import { FETCH_BOOKS, BOOKS, setBooks } from "../actions/books";
-import {
-  API_ERROR,
-  API_SUCCESS,
-  apiRequest
-} from "../actions/api";
+import { FETCH_BOOKS, BOOKS, setBooks, MOVE_BOOKS } from "../actions/books";
+import { API_ERROR, API_SUCCESS, apiRequest } from "../actions/api";
 import { setLoader } from "../actions/ui";
 import { setNotification } from "../actions/notification";
 
-let token = localStorage.token
+let token = localStorage.token;
 if (!token)
-  token = localStorage.token = Math.random().toString(36).substr(-8)
+  token = localStorage.token = Math.random()
+    .toString(36)
+    .substr(-8);
 
 const headers = {
-  'Accept': 'application/json',
-  'Authorization': token
-}
+  Accept: "application/json",
+  Authorization: token
+};
 
 const BOOKS_URL = "https://reactnd-books-api.udacity.com";
 
-export const bookMiddleware = () => next => action => {
+export const bookMiddleware = store => next => action => {
   next(action);
 
   switch (action.type) {
@@ -35,6 +33,19 @@ export const bookMiddleware = () => next => action => {
       next(setLoader({ state: true, feature: BOOKS }));
       break;
 
+    case MOVE_BOOKS:
+      next(
+        apiRequest({
+          body: JSON.stringify({shelf: action.payload.shelf}),
+          method: "PUT",
+          headers: {...headers, 'Content-Type': 'application/json'},
+          url: `${BOOKS_URL}/books/${action.payload.book.id}`,
+          feature: BOOKS
+        })
+      );
+      next(setLoader({ state: true, feature: BOOKS }));
+      break;
+
     case `${BOOKS} ${API_SUCCESS}`:
       // console.log('BOOKS API SUCCESS', action)
       next(setBooks({ books: action.payload.books }));
@@ -42,7 +53,9 @@ export const bookMiddleware = () => next => action => {
       break;
 
     case `${BOOKS} ${API_ERROR}`:
-      next(setNotification({ message: action.payload.message, feature: BOOKS }));
+      next(
+        setNotification({ message: action.payload.message, feature: BOOKS })
+      );
       next(setLoader({ state: false, feature: BOOKS }));
       break;
 

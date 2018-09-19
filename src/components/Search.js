@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import Book from "./Book";
 import * as BooksAPI from "../utils/BooksAPI";
 
+import { Search as SearchInput, Card, Button } from "semantic-ui-react";
+
 class Search extends Component {
   state = {
     searchResult: []
@@ -32,10 +34,7 @@ class Search extends Component {
     });
   };
 
-  addBookToShelf = (book, event) => {
-    let shelf = event.target.value;
-    book.shelf = shelf;
-
+  addBookToShelf = (book, shelf) => {
     BooksAPI.update(book, shelf).then(() => {
       this.props.setBooksState(book, shelf);
     });
@@ -43,35 +42,34 @@ class Search extends Component {
 
   render() {
     const searchResult = this.state.searchResult;
-
     return (
-      <div className="search-books">
-        <div className="search-books-bar">
-          <Link to="/" className="close-search">
-            Close
-          </Link>
-          <div className="search-books-input-wrapper">
-            <input
-              type="text"
-              onChange={this.searchQuery}
-              placeholder="Search by title or author"
+      <React.Fragment>
+        <Link to="/" className="close-search">
+        <Button
+          color='red'
+          content='Close'
+          icon='close'
+        />
+        </Link>
+        <SearchInput
+          input={{ icon: 'search', iconPosition: 'left' }}
+          onSearchChange={this.searchQuery}
+          placeholder="Search by title or author"
+        />
+        <input
+          type="text"
+          
+        />
+        <Card.Group itemsPerRow={3}>
+          {searchResult.map(book => (
+            <Book
+              key={book.id}
+              book={book}
+              handleChange={(event, value) => this.addBookToShelf(book, value)}
             />
-          </div>
-        </div>
-        <div className="search-books-results">
-          <ol className="books-grid">
-            {searchResult.map((bookSearch, index) =>
-              <div key={index}>
-                <Book
-                  key={bookSearch.id}
-                  book={bookSearch}
-                  handleChange={this.addBookToShelf}
-                />
-              </div>
-            )}
-          </ol>
-        </div>
-      </div>
+          ))}
+        </Card.Group>
+      </React.Fragment>
     );
   }
 }

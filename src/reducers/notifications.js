@@ -11,7 +11,7 @@ export const notifications = (notification = initState, action) => {
       return {...notification, message: action.payload};
 
     default:
-      return notification;
+      return {...notification};
   }
 };
 

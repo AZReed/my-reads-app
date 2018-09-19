@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import { Route } from "react-router-dom";
+import { Route, Link, withRouter } from "react-router-dom";
 import Search from "./components/Search";
 import BookShelves from "./components/BookShelves";
 import { connect } from "react-redux";
-import { fetchBooks } from "./actions/books";
+import { fetchBooks, moveBook } from "./actions/books";
 import PropTypes from "prop-types";
 
 import "./App.css";
-import 'semantic-ui-css/semantic.min.css';
+import "semantic-ui-css/semantic.min.css";
 
-import { Container } from "semantic-ui-react";
+import { Button, Container, Loader, Segment, Dimmer } from "semantic-ui-react";
 
 class BooksApp extends Component {
   state = {
@@ -17,7 +17,7 @@ class BooksApp extends Component {
   };
 
   componentDidMount() {
-    this.props.fetchBooks("");
+    this.props.fetchBooks();
     /*     BooksAPI.getAll().then(books => {
       this.setState({ books });
     }); */
@@ -30,29 +30,41 @@ class BooksApp extends Component {
     }));
   };
 
+  showLoader = () => (
+    <Segment>
+      <Dimmer style={{position: 'fixed'}} size='large' inverted active>
+        <Loader>Loading</Loader>
+      </Dimmer>
+    </Segment>
+  );
+
   render() {
     const books = this.props.books || [];
     return (
       <Container>
-          {this.props.loading === true ? <p>cargando</p> : <p>no cargando</p>}
-          <Route
-            exact
-            path="/search"
-            render={() => (
-              <Search
-                books={this.state.books}
-                setBooksState={this.setBooksState}
-              />
-            )}
-          />
-
-          <Route
-            exact
-            path="/"
-            render={() => (
-              <BookShelves books={books} setBooksState={this.setBooksState} />
-            )}
-          />
+        {this.props.loading === true ? (
+          this.showLoader()
+        ) : (
+          <React.Fragment>
+            <Route
+              exact
+              path="/search"
+              render={() => (
+                <Search
+                  books={books}
+                  setBooksState={this.setBooksState}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <BookShelves books={books} moveBook={this.props.moveBook} setBooksState={this.setBooksState} />
+              )}
+            />
+          </React.Fragment>
+        )}
       </Container>
     );
   }
@@ -64,17 +76,18 @@ BooksApp.propTypes = {
 };
 
 function mapStateToProps({ books: { books }, ui: { loading } }) {
-  // console.log("MAP",params.books)
+  console.log("MAP",books)
   return { books, loading };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchBooks: query => dispatch(fetchBooks(query))
+    fetchBooks: (query = '') => dispatch(fetchBooks(query)),
+    moveBook: book => dispatch(moveBook(book))
   };
 }
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(BooksApp);
+)(BooksApp));

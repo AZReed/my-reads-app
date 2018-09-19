@@ -1,4 +1,4 @@
-import { SET_BOOKS, FETCH_BOOKS } from "../actions/books";
+import { SET_BOOKS, FETCH_BOOKS, MOVE_BOOKS } from "../actions/books";
 
 const initState = {};
 
@@ -18,8 +18,21 @@ const books = (state = initState, action) => {
         books: action.payload
       };
 
+    case MOVE_BOOKS:
+      // console.log('MOVE_BOOK REDUCER', action)
+      /* const { books, bookToMove, shelf } = action.payload;
+      books.forEach(book => {
+        if (book.id === bookToMove.id) {
+          book.shelf = shelf;
+        }
+      }); */
+      return {
+        ...state,
+        // books: Object.assign([], books)
+      }
+
     default:
-      return state;
+      return {...state};
   }
 };
 

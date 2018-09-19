@@ -1,7 +1,7 @@
 import React from "react";
 import Book from "./Book";
 
-import { Card, Image, Icon } from "semantic-ui-react";
+import { Card } from "semantic-ui-react";
 
 const BookShelf = props => {
   return (

@@ -11,7 +11,7 @@ export const ui = (ui = initState, action) => {
       return { ...ui, loading: action.payload };
 
     default:
-      return ui;
+      return {...ui};
   }
 };
 
