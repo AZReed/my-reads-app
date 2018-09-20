@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 import BookShelf from "./BookShelf";
 import { Link } from "react-router-dom";
-import * as BooksAPI from "../utils/BooksAPI";
 
 import { Button } from "semantic-ui-react";
 

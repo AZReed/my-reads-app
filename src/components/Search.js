@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Book from "./Book";
-import * as BooksAPI from "../utils/BooksAPI";
+// import * as BooksAPI from "../utils/BooksAPI";
 
 import { Input, Card, Button } from "semantic-ui-react";
 
@@ -39,9 +39,11 @@ class Search extends Component {
   };
 
   addBookToShelf = (book, shelf) => {
-    BooksAPI.update(book, shelf).then(() => {
+    // console.log(book, shelf)
+    this.props.moveBook({book, shelf})
+    /* BooksAPI.update(book, shelf).then(() => {
       this.props.setBooksState(book, shelf);
-    });
+    }); */
   };
 
   render() {
@@ -67,7 +69,7 @@ class Search extends Component {
             <Book
               key={book.id}
               book={book}
-              handleChange={(event, value) => this.addBookToShelf(book, value)}
+              handleChange={this.addBookToShelf}
             />
           ))}
         </Card.Group>

@@ -24,7 +24,7 @@ const headers = {
 
 const BOOKS_URL = "https://reactnd-books-api.udacity.com";
 
-export const bookMiddleware = store => next => action => {
+export const bookMiddleware = () => next => action => {
   next(action);
 
   switch (action.type) {
