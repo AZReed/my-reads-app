@@ -1,6 +1,6 @@
-import { SET_BOOKS, FETCH_BOOKS, UPDATE_BOOK } from "../actions/books";
+import { SET_BOOKS, FETCH_BOOKS, UPDATE_BOOK, SET_QUERY_RESULT } from "../actions/books";
 
-const initState = {};
+const initState = {books: [], queryBooks: []};
 
 const books = (state = initState, action) => {
   switch (action.type) {
@@ -41,6 +41,13 @@ const books = (state = initState, action) => {
       return {
         ...state,
         books: _books
+      }
+
+    case SET_QUERY_RESULT:
+      console.log("QUERY RESULT", action)
+      return {
+        ...state,
+        queryBooks: action.payload.books
       }
 
     default:

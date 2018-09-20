@@ -1,9 +1,11 @@
 import {
   FETCH_BOOKS,
   BOOKS,
-  setBooks,
   MOVE_BOOKS,
-  updateBook
+  SEARCH_BOOKS,
+  setBooks,
+  updateBook,
+  setQueryResult
 } from "../actions/books";
 import { API_ERROR, API_SUCCESS, apiRequest } from "../actions/api";
 import { setLoader } from "../actions/ui";
@@ -45,7 +47,9 @@ export const bookMiddleware = store => next => action => {
       break;
 
     case `${BOOKS} ${API_ERROR}`:
-      next(setNotification({ message: action.payload.message, feature: BOOKS }));
+      next(
+        setNotification({ message: action.payload.message, feature: BOOKS })
+      );
       next(setLoader({ state: false, feature: BOOKS }));
       break;
 
@@ -66,6 +70,39 @@ export const bookMiddleware = store => next => action => {
     case `${MOVE_BOOKS} ${API_SUCCESS}`:
       next(updateBook({ books: action.payload }));
       next(setLoader({ state: false, feature: MOVE_BOOKS }));
+      break;
+
+    case `${MOVE_BOOKS} ${API_ERROR}`:
+      next(
+        setNotification({ message: action.payload.message, feature: MOVE_BOOKS })
+      );
+      next(setLoader({ state: false, feature: MOVE_BOOKS }));
+      break;
+
+    case SEARCH_BOOKS:
+      const { query, maxResults } = action.payload
+      next(
+        apiRequest({
+          body: JSON.stringify({ query, maxResults }),
+          method: "POST",
+          headers: { ...headers, "Content-Type": "application/json" },
+          url: `${BOOKS_URL}/search`,
+          feature: SEARCH_BOOKS
+        })
+      );
+      break;
+
+    case `${SEARCH_BOOKS} ${API_SUCCESS}`:
+      // console.log('SUCCESS', action)
+      next(setQueryResult({ books: action.payload }));
+      next(setLoader({ state: false, feature: SEARCH_BOOKS }));
+      break;
+
+    case `${SEARCH_BOOKS} ${API_ERROR}`:
+      next(
+        setNotification({ message: action.payload.message, feature: SEARCH_BOOKS })
+      );
+      next(setLoader({ state: false, feature: SEARCH_BOOKS }));
       break;
 
     default:

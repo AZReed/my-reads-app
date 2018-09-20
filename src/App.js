@@ -3,7 +3,7 @@ import { Route, Link, withRouter } from "react-router-dom";
 import Search from "./components/Search";
 import BookShelves from "./components/BookShelves";
 import { connect } from "react-redux";
-import { fetchBooks, moveBook } from "./actions/books";
+import { fetchBooks, moveBook, searchBooks } from "./actions/books";
 import PropTypes from "prop-types";
 
 import "./App.css";
@@ -36,7 +36,8 @@ class BooksApp extends Component {
   );
 
   render() {
-    const books = this.props.books || [];
+    const {books, queryBooks} = this.props;
+    // const books = this.props.books || [];
     return (
       <Container>
           <Route
@@ -45,6 +46,8 @@ class BooksApp extends Component {
             render={() => (
               <Search
                 books={books}
+                queryBooks={queryBooks}
+                searchBooks={this.props.searchBooks}
               />
             )}
           />
@@ -72,15 +75,16 @@ BooksApp.propTypes = {
   loading: PropTypes.bool
 };
 
-function mapStateToProps({ books: { books }, ui: { loading } }) {
+function mapStateToProps({ books: { books, queryBooks }, ui: { loading } }) {
   console.log("MAP",books)
-  return { books, loading };
+  return { books, loading, queryBooks };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     fetchBooks: (query = '') => dispatch(fetchBooks(query)),
-    moveBook: book => dispatch(moveBook(book))
+    moveBook: book => dispatch(moveBook(book)),
+    searchBooks: query => dispatch(searchBooks(query)),
   };
 }
 

@@ -7,7 +7,6 @@ import { Input, Card, Button } from "semantic-ui-react";
 
 class Search extends Component {
   state = {
-    searchResult: [],
     isLoading: false
   };
 
@@ -19,9 +18,11 @@ class Search extends Component {
       return;
     }
 
-    let me = this;
+    this.props.searchBooks({query})
 
-    BooksAPI.search(query).then(response => {
+    // let me = this;
+
+    /* BooksAPI.search(query).then(response => {
       // console.log(response)
       if (response === undefined) {
         // alert('no query')
@@ -38,7 +39,7 @@ class Search extends Component {
 
         me.setState({ searchResult: response });
       }
-    });
+    }); */
   };
 
   addBookToShelf = (book, shelf) => {
@@ -49,6 +50,10 @@ class Search extends Component {
 
   render() {
     const { searchResult, isLoading } = this.state;
+
+    console.log(this.props)
+    
+    const { queryBooks } = this.props
 
     return (
       <React.Fragment>
@@ -63,7 +68,7 @@ class Search extends Component {
           placeholder="Search..."
         />
         <Card.Group itemsPerRow={3}>
-          {searchResult.map(book => (
+          {queryBooks.map(book => (
             <Book
               key={book.id}
               book={book}
