@@ -7,7 +7,6 @@ const initState = {
 export const ui = (ui = initState, action) => {
   switch (true) {
     case action.type.includes(SET_LOADER):
-      // console.log('MIDDLE UI', action.type)
       return { ...ui, loading: action.payload };
 
     default:

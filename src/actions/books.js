@@ -16,22 +16,13 @@ export const fetchBooks = ({ query }) => ({
 });
 
 export const moveBook = (books) => {
-/*   books.forEach(book => {
-    if (book.id === bookToMove.id) {
-      book.shelf = shelf;
-    }
-  }); */
   return {
     type: MOVE_BOOKS,
     payload: books
   };
-  /* return({
-    type: MOVE,
-    payload: book
-  }) */
 }
 
-export const updateBook = (book) => ({
+export const updateBook = ({books}) => ({
   type: UPDATE_BOOK,
-  payload: book
+  payload: books
 })

@@ -11,19 +11,9 @@ class BookShelves extends Component {
   };
 
   moveBookToShelf = (book, shelf) => {
-/*     this.props.books.forEach(book => {
-      if (book.id === bookToMove.id) {
-        book.shelf = shelf;
-      }
-    }); */
     if (shelf !== book.shelf) {
-      console.log("DENTRO")
       this.props.moveBook({ book, shelf})
     }
-
-/*     BooksAPI.update(bookToMove, shelf).then((data) => {
-      // this.props.setBooksState(bookToMove, shelf);
-    }); */
   };
 
   render() {

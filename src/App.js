@@ -18,17 +18,14 @@ class BooksApp extends Component {
 
   componentDidMount() {
     this.props.fetchBooks();
-    /*     BooksAPI.getAll().then(books => {
-      this.setState({ books });
-    }); */
   }
 
-  setBooksState = (book, shelf) => {
+/*   setBooksState = (book, shelf) => {
     book.shelf = shelf;
     this.setState(state => ({
       books: state.books.filter(b => b.id !== book.id).concat([book])
     }));
-  };
+  }; */
 
   showLoader = () => (
     <Segment>
@@ -42,31 +39,31 @@ class BooksApp extends Component {
     const books = this.props.books || [];
     return (
       <Container>
-        {this.props.loading === true ? (
-          this.showLoader()
-        ) : (
-          <React.Fragment>
-            <Route
-              exact
-              path="/search"
-              render={() => (
-                <Search
-                  books={books}
-                  setBooksState={this.setBooksState}
-                />
-              )}
-            />
+          <Route
+            exact
+            path="/search"
+            render={() => (
+              <Search
+                books={books}
+              />
+            )}
+          />
             <Route
               exact
               path="/"
               render={() => (
-                <BookShelves books={books} moveBook={this.props.moveBook} setBooksState={this.setBooksState} />
+                <React.Fragment>
+                  {this.props.loading === true ? (
+                    this.showLoader()
+                  ) : (
+                    <BookShelves books={books} moveBook={this.props.moveBook} setBooksState={this.setBooksState} />
+                  )}
+                </React.Fragment>
               )}
             />
-          </React.Fragment>
-        )}
+  
       </Container>
-    );
+    )
   }
 }
 

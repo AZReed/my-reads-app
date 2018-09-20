@@ -3,15 +3,22 @@ import { Link } from "react-router-dom";
 import Book from "./Book";
 import * as BooksAPI from "../utils/BooksAPI";
 
-import { Search as SearchInput, Card, Button } from "semantic-ui-react";
+import { Input, Card, Button } from "semantic-ui-react";
 
 class Search extends Component {
   state = {
-    searchResult: []
+    searchResult: [],
+    isLoading: false
   };
 
   searchQuery = event => {
     let query = event.target.value;
+
+    if (query.length === 0) {
+      console.log("QUERY 0");
+      return;
+    }
+
     let me = this;
 
     BooksAPI.search(query).then(response => {
@@ -41,24 +48,19 @@ class Search extends Component {
   };
 
   render() {
-    const searchResult = this.state.searchResult;
+    const { searchResult, isLoading } = this.state;
+
     return (
       <React.Fragment>
         <Link to="/" className="close-search">
-        <Button
-          color='red'
-          content='Close'
-          icon='close'
-        />
+          <Button color="red" content="Close" icon="close" />
         </Link>
-        <SearchInput
-          input={{ icon: 'search', iconPosition: 'left' }}
-          onSearchChange={this.searchQuery}
-          placeholder="Search by title or author"
-        />
-        <input
-          type="text"
-          
+        <Input
+          loading={isLoading}
+          icon="search"
+          onChange={this.searchQuery}
+          iconPosition="left"
+          placeholder="Search..."
         />
         <Card.Group itemsPerRow={3}>
           {searchResult.map(book => (
