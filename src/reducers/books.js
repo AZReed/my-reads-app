@@ -43,6 +43,7 @@ const books = (state = initState, action) => {
       }
 
     case SET_QUERY_RESULT:
+      console.log("QUERY RESULT", action)
       return {
         ...state,
         queryBooks: action.payload.books

@@ -1,17 +1,17 @@
 import { SET_NOTIFICATION } from "../actions/notification";
 
 const initState = {
-  notification: ''
+  message: '',
 };
 
-export const notifications = (notification = initState, action) => {
+export const notifications = (state = initState, action) => {
   switch (true) {
     case action.type.includes(SET_NOTIFICATION):
-      console.log('notification', action, notification)
-      return {...notification, message: action.payload};
+      console.log('notification', action, state)
+      return {...state, message: action.payload};
 
     default:
-      return {...notification};
+      return {...state};
   }
 };
 

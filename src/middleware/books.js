@@ -47,9 +47,7 @@ export const bookMiddleware = store => next => action => {
       break;
 
     case `${BOOKS} ${API_ERROR}`:
-      next(
-        setNotification({ message: action.payload.message, feature: BOOKS })
-      );
+      next(setNotification({ message: action.payload.message, feature: BOOKS }));
       next(setLoader({ state: false, feature: BOOKS }));
       break;
 
@@ -73,9 +71,7 @@ export const bookMiddleware = store => next => action => {
       break;
 
     case `${MOVE_BOOKS} ${API_ERROR}`:
-      next(
-        setNotification({ message: action.payload.message, feature: MOVE_BOOKS })
-      );
+      next(setNotification({ message: action.payload.message, feature: MOVE_BOOKS }));
       next(setLoader({ state: false, feature: MOVE_BOOKS }));
       break;
 
@@ -94,15 +90,16 @@ export const bookMiddleware = store => next => action => {
       break;
 
     case `${SEARCH_BOOKS} ${API_SUCCESS}`:
-      // console.log('SUCCESS', action)
-      next(setQueryResult({ books: action.payload }));
+      if (action.payload.books && action.payload.books.error) {
+        next(setNotification({ message: action.payload.books.error, feature: SEARCH_BOOKS }));
+      } else {
+        next(setQueryResult({ books: action.payload }));
+      }
       next(setLoader({ state: false, feature: SEARCH_BOOKS }));
       break;
 
     case `${SEARCH_BOOKS} ${API_ERROR}`:
-      next(
-        setNotification({ message: action.payload.message, feature: SEARCH_BOOKS })
-      );
+      next(setNotification({ message: action.payload.message, feature: SEARCH_BOOKS }));
       next(setLoader({ state: false, feature: SEARCH_BOOKS }));
       break;
 
