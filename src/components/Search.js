@@ -6,10 +6,6 @@ import * as BooksAPI from "../utils/BooksAPI";
 import { Input, Card, Button } from "semantic-ui-react";
 
 class Search extends Component {
-  state = {
-    isLoading: false
-  };
-
   searchQuery = event => {
     let query = event.target.value;
 
@@ -49,11 +45,10 @@ class Search extends Component {
   };
 
   render() {
-    const { searchResult, isLoading } = this.state;
 
-    console.log(this.props)
+    console.log(this.props.loading)
     
-    const { queryBooks } = this.props
+    const { queryBooks, loading } = this.props
 
     return (
       <React.Fragment>
@@ -61,7 +56,7 @@ class Search extends Component {
           <Button color="red" content="Close" icon="close" />
         </Link>
         <Input
-          loading={isLoading}
+          loading={loading}
           icon="search"
           onChange={this.searchQuery}
           iconPosition="left"

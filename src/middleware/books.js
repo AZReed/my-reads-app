@@ -90,6 +90,7 @@ export const bookMiddleware = store => next => action => {
           feature: SEARCH_BOOKS
         })
       );
+      next(setLoader({ state: true, feature: SEARCH_BOOKS }));
       break;
 
     case `${SEARCH_BOOKS} ${API_SUCCESS}`:

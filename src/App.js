@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 import "./App.css";
 import "semantic-ui-css/semantic.min.css";
 
-import { Button, Container, Loader, Segment, Dimmer } from "semantic-ui-react";
+import { Container, Loader, Segment, Dimmer } from "semantic-ui-react";
 
 class BooksApp extends Component {
   state = {
@@ -36,7 +36,7 @@ class BooksApp extends Component {
   );
 
   render() {
-    const {books, queryBooks} = this.props;
+    const {books, queryBooks, loading} = this.props;
     // const books = this.props.books || [];
     return (
       <Container>
@@ -48,6 +48,7 @@ class BooksApp extends Component {
                 books={books}
                 queryBooks={queryBooks}
                 searchBooks={this.props.searchBooks}
+                loading={loading}
               />
             )}
           />
