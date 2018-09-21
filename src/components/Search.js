@@ -40,7 +40,7 @@ class Search extends Component {
 
   addBookToShelf = (book, shelf) => {
     // console.log(book, shelf)
-    this.props.moveBook({book, shelf})
+    this.props.addBook({book, shelf})
     /* BooksAPI.update(book, shelf).then(() => {
       this.props.setBooksState(book, shelf);
     }); */
@@ -48,8 +48,6 @@ class Search extends Component {
 
   render() {
 
-    console.log(this.props.loading)
-    
     const { queryBooks, loading } = this.props
 
     return (

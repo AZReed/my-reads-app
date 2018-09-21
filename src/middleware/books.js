@@ -3,9 +3,11 @@ import {
   BOOKS,
   MOVE_BOOKS,
   SEARCH_BOOKS,
+  ADD_BOOK,
   setBooks,
   updateBook,
-  setQueryResult
+  setQueryResult,
+  fetchBooks,
 } from "../actions/books";
 import { API_ERROR, API_SUCCESS, apiRequest } from "../actions/api";
 import { setLoader } from "../actions/ui";
@@ -101,6 +103,26 @@ export const bookMiddleware = () => next => action => {
     case `${SEARCH_BOOKS} ${API_ERROR}`:
       next(setNotification({ message: action.payload.message, feature: SEARCH_BOOKS }));
       next(setLoader({ state: false, feature: SEARCH_BOOKS }));
+      break;
+
+      case ADD_BOOK:
+      // console.log("ADD_BOOK",action.payload)
+      next(
+        apiRequest({
+          body: JSON.stringify({ shelf: action.payload.shelf }),
+          method: "PUT",
+          headers: { ...headers, "Content-Type": "application/json" },
+          url: `${BOOKS_URL}/books/${action.payload.book.id}`,
+          feature: ADD_BOOK
+        })
+        );
+        next(setLoader({ state: true, feature: ADD_BOOK }));
+        next(setNotification({ message: 'Adding Book', feature: ADD_BOOK }));
+        break
+
+        case `${ADD_BOOK} ${API_SUCCESS}`:
+        // console.log("ADD BOOK FETCH BOOKS")
+        next(fetchBooks())
       break;
 
     default:

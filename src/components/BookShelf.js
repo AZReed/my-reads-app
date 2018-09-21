@@ -7,7 +7,7 @@ const BookShelf = props => {
   return (
     <React.Fragment>
       <h2>{props.shelfName}</h2>
-      <Card.Group itemsPerRow={3}>
+      <Card.Group>
         {props.books.map(book => (
           <Book
             key={book.id}

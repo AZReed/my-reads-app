@@ -11,7 +11,7 @@ class BookShelves extends Component {
 
   moveBookToShelf = (book, shelf) => {
     if (shelf !== book.shelf) {
-      this.props.moveBook({ book, shelf})
+      this.props.moveBook({ book, shelf });
     }
   };
 
@@ -25,19 +25,19 @@ class BookShelves extends Component {
     return (
       <Fragment>
         <Link to="/search">
-          <Button content='Add Book' icon='add circle' labelPosition='left' />
+          <Button content="Add Book" icon="add circle" labelPosition="left" />
         </Link>
         <div>
           <h1>MyReads</h1>
         </div>
-        {shelves.map(shelf =>
+        {shelves.map(shelf => (
           <BookShelf
-          key={shelf.value}
-          shelfName={shelf.name}
-          books={this.filterBooksByShelf(shelf.value)}
-          moveBookToShelf={this.moveBookToShelf}
+            key={shelf.value}
+            shelfName={shelf.name}
+            books={this.filterBooksByShelf(shelf.value)}
+            moveBookToShelf={this.moveBookToShelf}
           />
-          )}
+        ))}
       </Fragment>
     );
   }

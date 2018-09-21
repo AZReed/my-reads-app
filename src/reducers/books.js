@@ -26,7 +26,7 @@ const books = (state = initState, action) => {
       const _state = { ...state }
 
       const _books = Object.assign([], _state.books)
-
+      console.log(action.payload)
       _books.forEach( (_book) => {
         Object.keys(action.payload).forEach( shelf => {
           let books_id = action.payload[shelf]

@@ -3,14 +3,14 @@ import { Route, withRouter } from "react-router-dom";
 import Search from "./components/Search";
 import BookShelves from "./components/BookShelves";
 import { connect } from "react-redux";
-import { fetchBooks, moveBook, searchBooks } from "./actions/books";
+import { fetchBooks, moveBook, searchBooks, addBook } from "./actions/books";
 import { setNotification } from "./actions/notification";
 import PropTypes from "prop-types";
 
 import "./App.css";
 import "semantic-ui-css/semantic.min.css";
 
-import { Message, Container, Loader, Segment, Dimmer } from "semantic-ui-react";
+import { Message, Container, Loader, Dimmer } from "semantic-ui-react";
 
 class BooksApp extends Component {
   componentDidMount() {
@@ -25,11 +25,9 @@ class BooksApp extends Component {
   }; */
 
   showLoader = () => (
-    <Segment>
-      <Dimmer style={{ position: "fixed" }} size="large" inverted active>
-        <Loader>Loading</Loader>
-      </Dimmer>
-    </Segment>
+    <Dimmer style={{ position: "fixed" }} size="large" inverted active>
+      <Loader>Loading</Loader>
+    </Dimmer>
   );
 
   handleDismiss = () => {
@@ -58,7 +56,7 @@ class BooksApp extends Component {
               queryBooks={queryBooks}
               searchBooks={this.props.searchBooks}
               loading={loading}
-              moveBook={this.props.moveBook}
+              addBook={this.props.addBook}
             />
           )}
         />
@@ -94,16 +92,17 @@ function mapStateToProps({
   ui: { loading },
   notifications: { message }
 }) {
-  console.log("MAP", books, queryBooks, message);
+  // console.log("MAP", books, queryBooks, message);
   return { books, loading, queryBooks, message };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchBooks: (query = "") => dispatch(fetchBooks(query)),
+    fetchBooks: () => dispatch(fetchBooks()),
     moveBook: book => dispatch(moveBook(book)),
     searchBooks: query => dispatch(searchBooks(query)),
-    setNotification: message => dispatch(setNotification(message))
+    setNotification: message => dispatch(setNotification(message)),
+    addBook: message => dispatch(addBook(message)),
   };
 }
 
