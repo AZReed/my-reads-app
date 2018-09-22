@@ -44,6 +44,7 @@ export const bookMiddleware = () => next => action => {
       break;
 
     case `${BOOKS} ${API_SUCCESS}`:
+      console.log('SUCCESS')
       next(setBooks({ books: action.payload.books }));
       next(setLoader({ state: false, feature: BOOKS }));
       break;
@@ -106,7 +107,6 @@ export const bookMiddleware = () => next => action => {
       break;
 
       case ADD_BOOK:
-      // console.log("ADD_BOOK",action.payload)
       next(
         apiRequest({
           body: JSON.stringify({ shelf: action.payload.shelf }),
@@ -121,7 +121,6 @@ export const bookMiddleware = () => next => action => {
         break
 
         case `${ADD_BOOK} ${API_SUCCESS}`:
-        // console.log("ADD BOOK FETCH BOOKS")
         next(fetchBooks())
       break;
 
