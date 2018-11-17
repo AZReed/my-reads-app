@@ -1,4 +1,4 @@
-import { SET_LOADER } from "../actions/ui";
+import { SET_LOADER } from '../actions/ui';
 
 const initState = {
   loading: false
@@ -10,7 +10,7 @@ export const ui = (ui = initState, action) => {
       return { ...ui, loading: action.payload };
 
     default:
-      return {...ui};
+      return { ...ui };
   }
 };
 

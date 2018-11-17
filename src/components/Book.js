@@ -15,7 +15,7 @@ const Book = props => {
       { key: "currentlyReading", value: "currentlyReading", text: "currentlyReading" },
       { key: "wantToRead", value: "wantToRead", text: "wantToRead" },
       { key: "read", value: "read", text: "read" },
-      { key: "none", value: "none", text: "none", disabled: true }
+      { key: "none", value: "none", text: "none" }
     ];
   }
 

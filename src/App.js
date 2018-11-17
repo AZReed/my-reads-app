@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import { Route, withRouter } from "react-router-dom";
-import Search from "./components/Search";
-import BookShelves from "./components/BookShelves";
-import { connect } from "react-redux";
-import { fetchBooks, moveBook, searchBooks, addBook } from "./actions/books";
-import { setNotification } from "./actions/notification";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import { Route, withRouter } from 'react-router-dom';
+import Search from './components/Search';
+import BookShelves from './components/BookShelves';
+import { connect } from 'react-redux';
+import { fetchBooks, moveBook, searchBooks, addBook } from './actions/books';
+import { setNotification } from './actions/notification';
+import PropTypes from 'prop-types';
 
-import "./App.css";
-import "semantic-ui-css/semantic.min.css";
+import './App.css';
+import 'semantic-ui-css/semantic.min.css';
 
-import { Message, Container, Loader, Dimmer } from "semantic-ui-react";
+import { Message, Container, Loader, Dimmer } from 'semantic-ui-react';
 
 class BooksApp extends Component {
   componentDidMount() {
@@ -25,13 +25,13 @@ class BooksApp extends Component {
   }; */
 
   showLoader = () => (
-    <Dimmer style={{ position: "fixed" }} size="large" inverted active>
+    <Dimmer style={{ position: 'fixed' }} size="large" inverted active>
       <Loader>Loading</Loader>
     </Dimmer>
   );
 
   handleDismiss = () => {
-    this.props.setNotification({ message: "", feature: "MANUAL" });
+    this.props.setNotification({ message: '', feature: 'MANUAL' });
   };
 
   showMessage = message => (
@@ -102,7 +102,7 @@ function mapDispatchToProps(dispatch) {
     moveBook: book => dispatch(moveBook(book)),
     searchBooks: query => dispatch(searchBooks(query)),
     setNotification: message => dispatch(setNotification(message)),
-    addBook: message => dispatch(addBook(message)),
+    addBook: message => dispatch(addBook(message))
   };
 }
 

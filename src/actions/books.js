@@ -17,10 +17,11 @@ export const fetchBooks = () => ({
   type: FETCH_BOOKS
 });
 
-export const moveBook = (books) => ({
+export const moveBook = (books) => {
+  return {
   type: MOVE_BOOKS,
   payload: books
-})
+}}
 
 export const updateBook = ({books}) => ({
   type: UPDATE_BOOK,
