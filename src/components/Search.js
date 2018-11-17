@@ -46,9 +46,23 @@ class Search extends Component {
     }); */
   };
 
+  addShelfToQueryBooks = () => {
+
+    const { queryBooks, books } = this.props;
+    
+    queryBooks.forEach(qBook => {
+      books.forEach(book => {
+        if (qBook.id === book.id) {
+          qBook.shelf = book.shelf
+        }
+      })
+    })
+  }
+
   render() {
 
     const { queryBooks, loading } = this.props
+    this.addShelfToQueryBooks();
 
     return (
       <React.Fragment>
