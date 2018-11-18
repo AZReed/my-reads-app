@@ -19,3 +19,29 @@ body,
 .ui.card {
   height: 345px;
 }
+
+.container {
+  margin-top: 25px;
+}
+
+.title {
+  display: block;
+  background-color: #EFAD44;
+}
+
+.add-button, .close-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+}
+
+.search-input, .message-notification {
+  width: 80%;
+  margin: auto; 
+}
+
+.search-input {
+  margin-top: 9vh;
+  margin-bottom: 9vh;
+}

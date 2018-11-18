@@ -66,7 +66,7 @@ class Search extends Component {
 
     return (
       <React.Fragment>
-        <Link to="/" className="close-search">
+        <Link to="/" className="close-button">
           <Button color="red" content="Close" icon="close" />
         </Link>
         <Input
@@ -75,8 +75,10 @@ class Search extends Component {
           onChange={this.searchQuery}
           iconPosition="left"
           placeholder="Search..."
+          size='huge'
+          className="search-input"
         />
-        <Card.Group itemsPerRow={3}>
+        <Card.Group itemsPerRow={4}>
           {queryBooks.map(book => (
             <Book
               key={book.id}

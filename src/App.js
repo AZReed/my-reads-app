@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import './App.css';
 import 'semantic-ui-css/semantic.min.css';
 
-import { Message, Container, Loader, Dimmer } from 'semantic-ui-react';
+import { Message, Container, Loader, Dimmer, Grid } from 'semantic-ui-react';
 
 class BooksApp extends Component {
   componentDidMount() {
@@ -39,6 +39,7 @@ class BooksApp extends Component {
       onDismiss={this.handleDismiss}
       header="Notification"
       content={message}
+      className="message-notification"
     />
   );
 
@@ -46,37 +47,39 @@ class BooksApp extends Component {
     const { books, queryBooks, loading, message } = this.props;
     return (
       <Container>
-        {message.length > 0 ? this.showMessage(message) : null}
-        <Route
-          exact
-          path="/search"
-          render={() => (
-            <Search
-              books={books}
-              queryBooks={queryBooks}
-              searchBooks={this.props.searchBooks}
-              loading={loading}
-              addBook={this.props.addBook}
-            />
-          )}
-        />
-        <Route
-          exact
-          path="/"
-          render={() => (
-            <React.Fragment>
-              {this.props.loading === true ? (
-                this.showLoader()
-              ) : (
-                <BookShelves
-                  books={books}
-                  moveBook={this.props.moveBook}
-                  setBooksState={this.setBooksState}
-                />
-              )}
-            </React.Fragment>
-          )}
-        />
+        <Grid>
+          {message.length > 0 ? this.showMessage(message) : null}
+          <Route
+            exact
+            path="/search"
+            render={() => (
+              <Search
+                books={books}
+                queryBooks={queryBooks}
+                searchBooks={this.props.searchBooks}
+                loading={loading}
+                addBook={this.props.addBook}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <React.Fragment>
+                {this.props.loading === true ? (
+                  this.showLoader()
+                ) : (
+                  <BookShelves
+                    books={books}
+                    moveBook={this.props.moveBook}
+                    setBooksState={this.setBooksState}
+                  />
+                )}
+              </React.Fragment>
+            )}
+          />
+        </Grid>
       </Container>
     );
   }

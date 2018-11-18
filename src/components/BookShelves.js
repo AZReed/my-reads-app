@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from "react";
-import BookShelf from "./BookShelf";
-import { Link } from "react-router-dom";
+import React, { Component, Fragment } from 'react';
+import BookShelf from './BookShelf';
+import { Link } from 'react-router-dom';
 
-import { Button } from "semantic-ui-react";
+import { Button, Grid, Icon } from 'semantic-ui-react';
 
 class BookShelves extends Component {
   filterBooksByShelf = shelf => {
@@ -17,19 +17,26 @@ class BookShelves extends Component {
 
   render() {
     const shelves = [
-      { value: "currentlyReading", name: "Currently Reading" },
-      { value: "wantToRead", name: "Want To Read" },
-      { value: "read", name: "Read" }
+      { value: 'currentlyReading', name: 'Currently Reading' },
+      { value: 'wantToRead', name: 'Want To Read' },
+      { value: 'read', name: 'Read' }
     ];
 
     return (
       <Fragment>
-        <Link to="/search">
-          <Button content="Add Book" icon="add circle" labelPosition="left" />
+        <Link to="/search" className="add-button">
+          <Button
+            color="blue"
+            content="Add Book"
+            icon="add circle"
+            labelPosition="left"
+          />
         </Link>
-        <div>
-          <h1>MyReads</h1>
-        </div>
+        <Grid.Row centered className="title">
+            <h1 className="title-header">
+              <Icon name="book" /> MyReads
+            </h1>
+        </Grid.Row>
         {shelves.map(shelf => (
           <BookShelf
             key={shelf.value}
